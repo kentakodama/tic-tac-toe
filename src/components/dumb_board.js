@@ -13,7 +13,7 @@ class DumbBoard extends React.Component {
     const currentPlayer = this.props.current
     const board = this.props.board;
     const playTurn = this.props.playTurn;
-
+// review this!
     return(
       <div className="rows">
         { board.map((row, y)=> {
@@ -27,7 +27,7 @@ class DumbBoard extends React.Component {
                     y={y}
                     currentPlayer={currentPlayer}
                     playTurn={playTurn}
-                    mark={board[y][x]}
+                    mark={board[y][x]} // ok to pass in like this
                   />
                 )
               })

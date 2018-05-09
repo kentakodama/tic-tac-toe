@@ -6,7 +6,7 @@ class Game extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { turns: 0, board: smartBoard(), currentPlayer: 'X' }
+    this.state = { turns: 1, board: smartBoard(), currentPlayer: 'X' }
     this.getLines = this.getLines.bind(this)
     this.winnerIs = this.winnerIs.bind(this)
     this.isOver = this.isOver.bind(this)
@@ -28,10 +28,14 @@ class Game extends React.Component {
     this.setState((prevState) => {
       return { currentPlayer: prevState.currentPlayer === 'X' ? 'O' : "X", turns: prevState.turns + 1 }
     })
+
   }
 
   isOver() {
-    if(this.state.turns >= 9) { return; }
+    if(this.state.turns >= 9) {
+      console.log('its a tie!');
+      return;
+    }
     const winner = this.winnerIs();
     if(winner !== "") {
       console.log(`the winner is ${winner}`);
@@ -43,7 +47,6 @@ class Game extends React.Component {
   winnerIs(){
     let winner = ''
     const lines = this.getLines();
-    console.log(lines);
     lines.forEach(line => {
       if(line.join('') === "XXX") {
         winner = "X"
@@ -60,6 +63,7 @@ class Game extends React.Component {
     // make lines a let not const because need to mutate later!
     let lines = [...matrix]; //horizontal combo
     lines = lines.concat(this.transpose(matrix))
+    // make sure to push not concat
     lines.push(this.getDiagonal(matrix))
     let reverseDiagonal = this.transpose(matrix).reverse();
     lines.push(this.getDiagonal(reverseDiagonal))
